@@ -1,0 +1,26 @@
+﻿# Flutter/Dart/Pub
+.dart_tool/
+.packages
+.pub-cache/
+build/
+android/key.properties
+android/app/*.keystore
+.idea/
+.vscode/
+*.iml
+/.flutter-plugins
+/.flutter-plugins-dependencies
+/.dart_tool/package_config.json
+
+# Mac/Windows system files
+*.DS_Store
+Thumbs.db
+
+# Generated plugin registrant
+**/generated_plugin_registrant.dart
+.dart_tool/
+.vscode/
+.idea/
+build/
+.packages
+pubspec.lock
