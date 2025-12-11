@@ -1,0 +1,38 @@
+name: Build Android AAB
+
+on:
+  push:
+    branches: [ master, main ]
+
+jobs:
+  build:
+    name: Build Android App Bundle
+    runs-on: ubuntu-latest
+    env:
+      JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Accept Android licenses
+        run: yes | flutter doctor --android-licenses || true
+
+      - name: Build AAB
+        run: flutter build appbundle --release
+
+      - name: Upload AAB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-appbundle
+          path: build/app/outputs/bundle/release/*.aab
+
+      # Note: Signing the AAB requires adding keystore and passwords to GitHub Secrets.
+      # To enable signed builds, add secrets: ANDROID_KEYSTORE (base64), KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD
