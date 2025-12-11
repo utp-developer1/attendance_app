@@ -34,3 +34,17 @@ jobs:
           name: web-build
           path: build/web
           retention-days: 30
+
+      - name: Deploy to GitHub Pages
+        run: |
+          mkdir -p docs
+          rm -rf docs/*
+          cp -r build/web/* docs/
+
+      - name: Commit and push to GitHub Pages
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/
+          git commit -m "docs: auto-deploy web build" || echo "No changes to commit"
+          git push origin master
